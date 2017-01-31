@@ -56,7 +56,7 @@ module.exports = function (environment, port, connection, instance) {
     } else res.header("Access-Control-Allow-Origin", req.protocol + '://' + environment.domain + ":2095");
 
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   });
@@ -72,8 +72,8 @@ module.exports = function (environment, port, connection, instance) {
   // Secret middleware
   app.use((req, res, next) => {
     req.envSecret = app.get('secret');
-    next();
-  });
+  next();
+});
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({

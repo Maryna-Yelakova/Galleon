@@ -12,15 +12,17 @@ exports = module.exports = function (urls) {
       let token = req.signedCookies.authentication;
       if ((!token) || (token == '') || (!token.sessionID)) {
         try {
-          token = jwt.verify(req.headers.token || "", req.envSecret);
+          // token = req.get('Authorization');
+          token = jwt.verify(req.get('Authorization') || "", req.envSecret);
         } catch (error) {
           token = null;
-          req.getCredentials = function (callback) { callback("NOT AUTHENTICATED") };
+          req.getCredentials = function (callback) { callback("NOT AUTHENTICATED1") };
         }
       } // :O No cookie!
 
+
       if (!token) {
-        req.getCredentials = function (callback) { callback("NOT AUTHENTICATED") }
+        req.getCredentials = function (callback) { callback(req.get('Authorization')) }
       } else {
         req.getCredentials = function (callback) {
           if (!token.sessionID) return res.redirect(urls.login);
