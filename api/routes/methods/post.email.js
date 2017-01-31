@@ -7,6 +7,7 @@ module.exports = function (req, res) {
     from: req.credentials.name + ' <' + req.credentials.email + '>',
     to: req.param('to'),
     subject: req.param('subject'),
+    text: req.param('text'),
     html: req.param('html'),
     draft: req.param('draft'),
     remove: req.param('remove')
